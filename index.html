@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookie Chip (CHIP)</title>
+  <meta name="description" content="Cookie Chip (CHIP) is the community token powering Cookie — a sweet, simple DEX on Solana. Not just a meme — we’re building Cookie DEX." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🍪</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --cookie-brown: #8b5e34;
+      --cookie-amber: #f59e0b;
+      --cookie-cream: #fff7ed;
+    }
+    .text-cookie { color: var(--cookie-brown); }
+    .text-cookie-80 { color: #8b5e34cc; }
+    .bg-cookie { background: var(--cookie-cream); }
+    .btn { border-radius: 1rem; padding: 0.75rem 1.25rem; font-weight: 700;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);
+      transition: transform .08s ease, filter .2s ease, background .2s ease; display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn:active { transform: translateY(1px) scale(0.99); }
+    .btn-primary { color: #fff; background: var(--cookie-amber); }
+    .btn-primary:hover { filter: brightness(0.95); }
+    .btn-outline { border: 2px solid var(--cookie-amber); color: var(--cookie-brown); background: transparent; }
+    .btn-outline:hover { background: #fef3c7; }
+    .cookie-rain { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .cookie { position: absolute; font-size: 28px; animation: fall linear forwards; opacity: 0.9; }
+    @keyframes fall {
+      0% { transform: translateY(-10%) rotate(0deg); opacity:0; }
+      10% { opacity:1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity:0.95; }
+    }
+    .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(6px); }
+    .cookie-btn { width: 180px; height: 180px; border-radius: 9999px; font-size: 90px; line-height: 180px; text-align: center;
+      background: radial-gradient(circle at 35% 35%, #fbbf24 0%, #f59e0b 60%, #d97706 100%);
+      box-shadow: inset 0 8px 16px rgba(255,255,255,.3), inset 0 -8px 16px rgba(0,0,0,.2), 0 10px 20px rgba(0,0,0,.15);
+      user-select: none; cursor: pointer; transition: transform .05s ease;
+    }
+    .cookie-btn:active { transform: scale(0.97); }
+    .chip-dot { position: absolute; width: 14px; height: 14px; background:#5b3a1d; border-radius: 9999px; opacity:.9; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-amber-100 via-amber-50 to-amber-100 text-cookie">
+  <!-- Nav -->
+  <header class="sticky top-0 z-30 bg-amber-100/80 backdrop-blur border-b border-amber-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2 text-xl font-extrabold">
+        <span class="text-2xl">🍪</span>
+        <span>Cookie Chip</span>
+        <span class="text-sm font-bold bg-amber-200 text-cookie px-2 py-0.5 rounded">CHIP</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#about" class="nav-link hover:underline">About</a>
+        <a href="#tokenomics" class="nav-link hover:underline">Tokenomics</a>
+        <a href="#dex" class="nav-link hover:underline">Cookie DEX</a>
+        <a href="#roadmap" class="nav-link hover:underline">Roadmap</a>
+        <a href="#clicker" class="nav-link hover:underline">Cookie Clicker</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <a id="buyLink" href="#" class="btn btn-primary">Buy on Raydium</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero / About -->
+  <section id="about" class="relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 py-16 md:py-24">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">Cookie Chip <span class="text-amber-600">(CHIP)</span></h1>
+          <p class="mt-4 text-lg md:text-xl text-cookie-80">A community token with a purpose: powering <strong>Cookie</strong>, a sweet and simple DEX on Solana. Not just a meme — it’s a snack-sized DeFi experience.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a id="chartLink" href="#" class="btn btn-outline">View Chart</a>
+            <a id="scanLink" href="#" class="btn btn-outline">Solscan</a>
+            <button id="copyMint" class="btn btn-outline">Copy Contract</button>
+          </div>
+          <p class="mt-3 text-sm text-cookie-80">Mint Address: <span id="mintAddress">PASTE_YOUR_TOKEN_MINT_ADDRESS_HERE</span></p>
+        </div>
+        <div class="glass rounded-3xl p-8 shadow-xl">
+          <h3 class="text-2xl font-bold flex items-center gap-2"><span>🍪</span> Why Cookie Chip?</h3>
+          <ul class="mt-4 space-y-3">
+            <li>• Instant swaps on Solana with <strong>Cookie DEX</strong> (coming soon).</li>
+            <li>• Clean UI, low fees, and community-first features.</li>
+            <li>• Fun culture, serious shipping. We bake, then we moon.</li>
+          </ul>
+          <div class="mt-6 rounded-2xl border border-amber-200 p-4 bg-amber-50">
+            <p class="text-sm"><strong>Tip:</strong> Replace the links above with your live Raydium, Dexscreener, and Solscan URLs before launch.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Cookie rain layer -->
+    <div id="cookieRain" class="cookie-rain" aria-hidden="true"></div>
+  </section>
+
+  <!-- Tokenomics -->
+  <section id="tokenomics" class="py-16 md:py-20 bg-cookie border-t border-amber-200">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl font-extrabold text-center">Tokenomics</h2>
+      <p class="text-center mt-2 text-cookie-80">Simple ingredients, great taste.</p>
+      <div class="grid md:grid-cols-3 gap-6 mt-10">
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">Total Supply</h3>
+          <p class="mt-2 text-2xl">100,000,000 CHIP</p>
+        </div>
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">Initial Liquidity</h3>
+          <p class="mt-2 text-2xl">Raydium V3 Pool</p>
+          <p class="text-sm text-cookie-80">Added at launch for trading.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">Community Fund</h3>
+          <p class="mt-2 text-2xl">Meme contests, site, growth</p>
+          <p class="text-sm text-cookie-80">Transparent giveaways & rewards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cookie DEX Preview -->
+  <section id="dex" class="py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl font-extrabold text-center">Cookie DEX</h2>
+      <p class="text-center mt-2 text-cookie-80">A PancakeSwap-style experience on Solana — simple swaps, LP, and sweet yields.</p>
+      <div class="grid md:grid-cols-3 gap-6 mt-10">
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">🥞 Swap</h3>
+          <p class="mt-2">Fast token swaps with a clean, mobile-first UI.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">🍯 Liquidity</h3>
+          <p class="mt-2">Provide liquidity and earn fees.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">🎁 Farms (Planned)</h3>
+          <p class="mt-2">Stake LP to farm CHIP and partner rewards.</p>
+        </div>
+      </div>
+      <div class="glass rounded-2xl p-6 shadow mt-6">
+        <p class="text-sm text-cookie-80">Dexscreener embed (optional): replace SRC and uncomment.</p>
+        <pre class="text-xs bg-white/60 p-3 rounded mt-3 overflow-auto">&lt;!--
+&lt;iframe src="https://dexscreener.com/solana/PUT_YOUR_POOL_OR_PAIR_ADDRESS_HERE" width="100%" height="600" allowfullscreen class="rounded-xl border"&gt;&lt;/iframe&gt;
+--&gt;</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section id="roadmap" class="py-16 md:py-20 bg-cookie border-t border-amber-200">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl font-extrabold text-center">Roadmap — From Dough to DEX</h2>
+      <div class="grid md:grid-cols-2 gap-6 mt-10">
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">Phase 1 — Preheat</h3>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <li>Mint CHIP, deploy Raydium pool</li>
+            <li>Launch site & socials</li>
+            <li>First meme contest</li>
+          </ul>
+        </div>
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">Phase 2 — Bake</h3>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <li>Cookie DEX MVP: Swap + Liquidity</li>
+            <li>Integrate Jupiter routing</li>
+            <li>Community rewards & partnerships</li>
+          </ul>
+        </div>
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">Phase 3 — Frost</h3>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <li>Farms & staking (LP → CHIP)</li>
+            <li>UI polish, dark mode</li>
+            <li>Listings & audits (as applicable)</li>
+          </ul>
+        </div>
+        <div class="glass rounded-2xl p-6 shadow">
+          <h3 class="text-xl font-bold">Phase 4 — Feast</h3>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <li>Advanced analytics</li>
+            <li>Grants & ecosystem collabs</li>
+            <li>Scale features based on community votes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cookie Clicker Game -->
+  <section id="clicker" class="py-16 md:py-24 border-t border-amber-200 bg-gradient-to-b from-amber-50 to-amber-100">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl font-extrabold text-center">Cookie Clicker — Earn CHIP 🍪</h2>
+      <p class="text-center mt-2 text-cookie-80">Just for fun on the website (not on-chain). Click the cookie, buy upgrades, rack up CHIP!</p>
+
+      <div class="mt-10 grid lg:grid-cols-2 gap-10 items-start">
+        <!-- Left: Big Cookie & Stats -->
+        <div class="flex flex-col items-center gap-6">
+          <div class="text-center">
+            <div id="chipCount" class="text-5xl font-extrabold">0 CHIP</div>
+            <div id="cps" class="text-cookie-80 mt-1">0 / sec</div>
+          </div>
+          <div class="relative" id="chipContainer">
+            <button id="cookieBtn" class="cookie-btn" aria-label="Big Cookie">🍪</button>
+          </div>
+          <div class="flex gap-3">
+            <button id="saveBtn" class="btn btn-outline">Save</button>
+            <button id="resetBtn" class="btn btn-outline">Reset</button>
+          </div>
+        </div>
+
+        <!-- Right: Upgrades -->
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div class="glass rounded-2xl p-6 shadow">
+            <h3 class="text-xl font-bold">Cursor</h3>
+            <p class="text-cookie-80">Automatically clicks the cookie.</p>
+            <p class="mt-2"><span id="cursorOwned">0</span> owned • +0.1 / sec</p>
+            <button id="buyCursor" class="btn btn-primary mt-4 w-full">Buy — <span id="cursorCost">15</span> CHIP</button>
+          </div>
+          <div class="glass rounded-2xl p-6 shadow">
+            <h3 class="text-xl font-bold">Oven</h3>
+            <p class="text-cookie-80">Warms up production nicely.</p>
+            <p class="mt-2"><span id="ovenOwned">0</span> owned • +1 / sec</p>
+            <button id="buyOven" class="btn btn-primary mt-4 w-full">Buy — <span id="ovenCost">100</span> CHIP</button>
+          </div>
+          <div class="glass rounded-2xl p-6 shadow">
+            <h3 class="text-xl font-bold">Factory</h3>
+            <p class="text-cookie-80">Serious cookie output.</p>
+            <p class="mt-2"><span id="factoryOwned">0</span> owned • +5 / sec</p>
+            <button id="buyFactory" class="btn btn-primary mt-4 w-full">Buy — <span id="factoryCost">1000</span> CHIP</button>
+          </div>
+          <div class="glass rounded-2xl p-6 shadow">
+            <h3 class="text-xl font-bold">Golden Chip</h3>
+            <p class="text-cookie-80">Doubles all production for 30s.</p>
+            <p class="mt-2">One-time use power-up.</p>
+            <button id="powerupBtn" class="btn btn-outline mt-4 w-full">Activate (30s)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-10 text-center">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex flex-wrap items-center justify-center gap-4 text-sm">
+        <a id="xLink" href="#" class="hover:underline">Twitter/X</a>
+        <a id="tgLink" href="#" class="hover:underline">Telegram</a>
+        <a id="dcLink" href="#" class="hover:underline">Discord</a>
+        <span class="opacity-60">•</span>
+        <span>© <span id="year"></span> Cookie Chip (CHIP)</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ==========================
+    // Smooth scroll for nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // ==========================
+    // Links
+    const LINKS = {
+      buy: "https://raydium.io/swap?token=CHIP",
+      chart: "https://dexscreener.com/solana/YOUR_POOL_ADDRESS",
+      scan: "https://solscan.io/token/YOUR_MINT_ADDRESS",
+      x: "https://twitter.com/yourhandle",
+      tg: "https://t.me/yourhandle",
+      dc: "https://discord.gg/yourhandle",
+    };
+    document.getElementById("buyLink").href = LINKS.buy;
+    document.getElementById("chartLink").href = LINKS.chart;
+    document.getElementById("scanLink").href = LINKS.scan;
+    document.getElementById("xLink").href = LINKS.x;
+    document.getElementById("tgLink").href = LINKS.tg;
+    document.getElementById("dcLink").href = LINKS.dc;
+
+    // Copy mint
+    const mintAddress = "PASTE_YOUR_TOKEN_MINT_ADDRESS_HERE";
+    document.getElementById("mintAddress").textContent = mintAddress;
+    document.getElementById("copyMint").addEventListener('click',()=>{navigator.clipboard.writeText(mintAddress); alert('Mint address copied!');});
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ==========================
+    // Cookie rain - capped
+    const cookieRain = document.getElementById("cookieRain");
+    const MAX_COOKIES = 50;
+    function makeCookie() {
+      if (cookieRain.children.length >= MAX_COOKIES) return;
+      const c = document.createElement("span");
+      c.className = "cookie";
+      c.textContent = "🍪";
+      c.style.left = `${Math.random()*100}vw`;
+      c.style.animationDuration = `${3+Math.random()*3}s`;
+      cookieRain.appendChild(c);
+      setTimeout(()=>cookieRain.removeChild(c), 7000);
+    }
+    for (let i=0;i<20;i++) setTimeout(makeCookie,i*200);
+    setInterval(makeCookie,600);
+
+    // ==========================
+    // Chip dots - random
+    const chipContainer = document.getElementById("chipContainer");
+    for(let i=0;i<30;i++){
+      const dot = document.createElement("div");
+      dot.className="chip-dot";
+      dot.style.left = `${Math.random()*100}%`;
+      dot.style.top = `${Math.random()*100}%`;
+      chipContainer.appendChild(dot);
+    }
+
+    // ==========================
+    // Cookie clicker
+    const game = {
+      chip:0, cursor:0, oven:0, factory:0, powerupUntil:0
+    };
+    const prices = { cursor:15, oven:100, factory:1000 };
+
+    function saveGame(){localStorage.setItem("cookieGame",JSON.stringify(game));}
+    function loadGame(){
+      const saved=JSON.parse(localStorage.getItem("cookieGame")||"{}");
+      for(const k in game){if(saved[k]!=null) game[k]=saved[k];}
+    }
+    loadGame();
+
+    function cps(){let c=0.1*game.cursor+1*game.oven+5*game.factory; if(Date.now()<game.powerupUntil) c*=2; return c;}
+    function fmt(v){return v.toFixed(1);}
+    const chipCount = document.getElementById("chipCount");
+    const cpsDisplay = document.getElementById("cps");
+
+    function tick(){
+      const delta=0.016;
+      game.chip+=cps()*delta;
+      chipCount.textContent=fmt(game.chip)+" CHIP";
+      cpsDisplay.textContent=fmt(cps())+" / sec";
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    // Buttons
+    const cookieBtn = document.getElementById("cookieBtn");
+    cookieBtn.addEventListener("click",()=>{game.chip+=1; chipCount.textContent=fmt(game.chip)+" CHIP";});
+
+    const buyCursor = document.getElementById("buyCursor");
+    const buyOven = document.getElementById("buyOven");
+    const buyFactory = document.getElementById("buyFactory");
+    const powerupBtn = document.getElementById("powerupBtn");
+    const saveBtn = document.getElementById("saveBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function buy(item, costEl, ownedEl, price){
+      if(game.chip>=price){game.chip-=price; game[item]++; price=Math.floor(price*1.15); costEl.textContent=price; ownedEl.textContent=game[item];}
+    }
+
+    buyCursor.addEventListener("click",()=>buy("cursor",document.getElementById("cursorCost"),document.getElementById("cursorOwned"),prices.cursor));
+    buyOven.addEventListener("click",()=>buy("oven",document.getElementById("ovenCost"),document.getElementById("ovenOwned"),prices.oven));
+    buyFactory.addEventListener("click",()=>buy("factory",document.getElementById("factoryCost"),document.getElementById("factoryOwned"),prices.factory));
+
+    powerupBtn.addEventListener("click",()=>{
+      game.powerupUntil=Date.now()+30000;
+      powerupBtn.disabled=true;
+      setTimeout(()=>powerupBtn.disabled=false,30000);
+    });
+
+    saveBtn.addEventListener("click",()=>{saveGame(); alert("Game saved!")});
+    resetBtn.addEventListener("click",()=>{if(confirm("Reset game?")){for(const k in game) game[k]=0; saveGame(); location.reload();}});
+  </script>
+</body>
+</html>
